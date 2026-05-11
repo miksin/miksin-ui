@@ -5,7 +5,7 @@
 
   :root {
     /* Primitive */
-    --color-primary-500: oklch(55% 0.2 250);
+    --color-primary-500: oklch(65% 0.25 350);
     --color-neutral-50:  oklch(98% 0 0);
     --color-neutral-900: oklch(15% 0 0);
     --radius-base: 0.375rem;
