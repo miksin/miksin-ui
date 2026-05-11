@@ -1,6 +1,6 @@
 # miksin-ui
 
-A personal CSS design system — pure component classes that work with any JS framework, with optional Tailwind v3 plugin.
+A personal token-based CSS design system — pure component classes that work with any JS framework, with an optional Tailwind v3 plugin.
 
 ## Install
 
@@ -17,26 +17,28 @@ npm install miksin-ui
 import miksinui from 'miksin-ui/tailwind'
 
 export default {
+  content: ['./src/**/*.{html,js,ts,jsx,tsx,astro,vue,svelte}'],
   plugins: [miksinui],
 }
 ```
 
 ### Without Tailwind
 
-```html
-<link rel="stylesheet" href="node_modules/miksin-ui/dist/miksin-ui.css" />
+```js
+import 'miksin-ui/dist/miksin-ui.css'
 ```
 
 ## Components
 
-| Class | Element | Description |
+| Class | Element | Notes |
 |---|---|---|
-| `.btn` | `<button>` | Base button |
-| `.btn-primary` | `<button>` | Primary color variant |
-| `.btn-ghost` | `<button>` | Ghost/outline variant |
+| `.btn` | `<button>` | Default (primary fill) |
+| `.btn-outline` | `<button>` | Outlined variant |
+| `.btn-ghost` | `<button>` | No border or background |
 | `.btn-sm` / `.btn-lg` | `<button>` | Size variants |
 | `.badge` | `<span>` | Inline label |
-| `.badge-primary` | `<span>` | Primary color badge |
+| `.badge-outline` | `<span>` | Outlined variant |
+| `.badge-sm` | `<span>` | Smaller size |
 | `.input` | `<input>` | Text input |
 | `.select` | `<select>` | Select dropdown |
 | `.textarea` | `<textarea>` | Multi-line input |
@@ -44,9 +46,9 @@ export default {
 | `.radio` | `<input type="radio">` | Styled radio button |
 | `.toggle` | `<input type="checkbox">` | On/off switch |
 | `.card` | `<div>` | Card container |
-| `.card-body` | `<div>` | Card content area |
-| `.container` | `<div>` | Centered page container |
-| `.divider` | `<hr>` | Horizontal rule |
+| `.card-header` / `.card-body` / `.card-footer` | `<div>` | Card sections |
+| `.container` | `<div>` | Centered page wrapper |
+| `.divider` | `<hr>` | Horizontal separator |
 
 ## Theming
 
@@ -54,10 +56,9 @@ Override CSS variables to customize the design system:
 
 ```css
 :root {
-  --color-primary: oklch(55% 0.2 250);
-  --color-bg: oklch(98% 0 0);
-  --color-fg: oklch(15% 0 0);
-  --radius-base: 0.375rem;
+  --color-primary-500:   oklch(58% 0.22 145); /* green */
+  --color-secondary-500: oklch(65% 0.18 260); /* blue */
+  --radius-base:         0.5rem;
 }
 ```
 
