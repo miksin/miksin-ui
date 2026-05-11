@@ -4,6 +4,8 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>miksin-ui Theme Configurator</title>
+<!-- Load built CSS so we can read current token values at runtime -->
+<link rel="stylesheet" href="../packages/miksin-ui/dist/miksin-ui.css" />
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -498,7 +500,19 @@
 </footer>
 
 <script>
-// ─── State ────────────────────────────────────────────────────────────────────
+// ─── Read CSS variables from loaded dist ──────────────────────────────────────
+function getCSS(name) {
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim()
+}
+function parseOklch(v) {
+  const m = v.match(/oklch\(\s*([\d.]+)%\s+([\d.]+)\s+([\d.]+)\s*\)/)
+  return m ? { l: parseFloat(m[1]), c: parseFloat(m[2]), h: parseFloat(m[3]) } : null
+}
+function readColor(cssName, fallback) {
+  return parseOklch(getCSS(cssName)) || fallback
+}
+
+// ─── State (fallbacks overridden by initFromCSS) ──────────────────────────────
 const colors = {
   primary:   { l: 61, c: 0.16, h: 360 },
   secondary: { l: 67, c: 0.14, h: 221 },
@@ -834,7 +848,45 @@ function setTheme(mode, btn) {
   applyColors()
 }
 
+// ─── Sync defaults from built CSS ─────────────────────────────────────────────
+function initFromCSS() {
+  // Colors
+  Object.assign(colors.primary,   readColor('--color-primary-500',   colors.primary))
+  Object.assign(colors.secondary, readColor('--color-secondary-500', colors.secondary))
+  Object.assign(colors.success,   readColor('--color-success-500',   colors.success))
+  Object.assign(colors.warning,   readColor('--color-warning-500',   colors.warning))
+  Object.assign(colors.error,     readColor('--color-error-500',     colors.error))
+
+  // Neutral tint (read H+C from neutral-50)
+  const n50 = parseOklch(getCSS('--color-neutral-50'))
+  if (n50) { neutral.h = n50.h; neutral.c = n50.c }
+
+  // Neutral stops lightness
+  const stopVars = {
+    'neutral-50':  '--color-neutral-50',
+    'muted':       '--color-muted',
+    'border':      '--color-border',
+    'muted-fg':    '--color-muted-fg',
+    'neutral-900': '--color-neutral-900',
+  }
+  neutralStops.forEach(stop => {
+    const parsed = parseOklch(getCSS(stopVars[stop.name]))
+    if (parsed) stop.l = parsed.l
+  })
+
+  // Radius — match against known options, keep current if unrecognized
+  const rv = getCSS('--radius-base')
+  const rm = radiusOptions.find(o => o.value === rv)
+  if (rm) currentRadius = rm.value
+
+  // Shadow — match against known options
+  const sv = getCSS('--color-shadow')
+  const sm = shadowOptions.find(o => o.value === sv)
+  if (sm) currentShadow = sm.value
+}
+
 // ─── Init ─────────────────────────────────────────────────────────────────────
+initFromCSS()
 buildColorControls()
 buildNeutralControls()
 buildRadiusControls()
