@@ -1,47 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro'
-
-const primitive = [
-  { name: '--color-primary-500',   value: 'oklch(61% 0.16 360)', description: 'Primitive primary color (pink-red)' },
-  { name: '--color-secondary-500', value: 'oklch(67% 0.14 221)', description: 'Primitive secondary color (sky blue)' },
-  { name: '--color-success-500',   value: 'oklch(67% 0.14 138)', description: 'Primitive success color (green)' },
-  { name: '--color-warning-500',   value: 'oklch(72% 0.14 77)',  description: 'Primitive warning color (amber)' },
-  { name: '--color-error-500',     value: 'oklch(66% 0.16 25)',  description: 'Primitive error color (red)' },
-  { name: '--color-neutral-50',    value: 'oklch(98% 0.01 68)',  description: 'Lightest neutral (warm tint)' },
-  { name: '--color-neutral-900',   value: 'oklch(23% 0.01 68)',  description: 'Darkest neutral (warm tint)' },
-  { name: '--radius-base',         value: '0.75rem',             description: 'Base border radius' },
-]
-
-const semantic = [
-  { name: '--color-bg',           value: 'var(--color-neutral-50)',    description: 'Page background' },
-  { name: '--color-fg',           value: 'var(--color-neutral-900)',   description: 'Primary text' },
-  { name: '--color-primary',      value: 'var(--color-primary-500)',   description: 'Primary interactive color' },
-  { name: '--color-primary-text', value: 'oklch(98% 0 0)',             description: 'Text on primary backgrounds' },
-  { name: '--color-secondary',    value: 'var(--color-secondary-500)', description: 'Secondary interactive color' },
-  { name: '--color-success',      value: 'var(--color-success-500)',   description: 'Success state color' },
-  { name: '--color-warning',      value: 'var(--color-warning-500)',   description: 'Warning state color' },
-  { name: '--color-error',        value: 'var(--color-error-500)',     description: 'Error / danger state color' },
-  { name: '--color-border',       value: 'oklch(89% 0.01 68)',         description: 'Default border color' },
-  { name: '--color-muted',        value: 'oklch(92% 0.01 68)',         description: 'Muted background' },
-  { name: '--color-muted-fg',     value: 'oklch(53% 0.01 68)',         description: 'Muted / secondary text' },
-  { name: '--color-shadow',       value: 'none',                       description: 'Box shadow for elevated surfaces' },
-]
-
-const component = [
-  { name: '--btn-radius',   value: 'var(--radius-base)',          description: 'Button border radius' },
-  { name: '--input-radius', value: 'var(--radius-base)',          description: 'Input border radius' },
-  { name: '--card-radius',  value: 'calc(var(--radius-base) * 2)', description: 'Card border radius' },
-  { name: '--card-padding', value: '1.5rem',                      description: 'Card internal padding' },
-  { name: '--card-shadow',  value: 'var(--color-shadow)',         description: 'Card box shadow' },
-]
-
-const darkOverrides = [
-  { name: '--color-bg',       value: 'oklch(23% 0.01 68)' },
-  { name: '--color-fg',       value: 'oklch(97% 0.01 68)' },
-  { name: '--color-border',   value: 'oklch(63% 0.01 68)' },
-  { name: '--color-muted',    value: 'oklch(28% 0.01 68)' },
-  { name: '--color-muted-fg', value: 'oklch(73% 0.01 68)' },
-]
+import { primitive, semantic, component, darkOverrides } from '../generated/tokens'
 
 function isColor(name: string) {
   return name.startsWith('--color-') && name !== '--color-shadow'

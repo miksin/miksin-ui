@@ -1,0 +1,29 @@
+{
+  "--color-primary-500":   "Primitive primary color (pink-red)",
+  "--color-secondary-500": "Primitive secondary color (sky blue)",
+  "--color-success-500":   "Primitive success color (green)",
+  "--color-warning-500":   "Primitive warning color (amber)",
+  "--color-error-500":     "Primitive error color (red)",
+  "--color-neutral-50":    "Lightest neutral (warm tint)",
+  "--color-neutral-900":   "Darkest neutral (warm tint)",
+  "--radius-base":         "Base border radius",
+
+  "--color-bg":            "Page background",
+  "--color-fg":            "Primary text",
+  "--color-primary":       "Primary interactive color",
+  "--color-primary-text":  "Text on primary backgrounds",
+  "--color-secondary":     "Secondary interactive color",
+  "--color-success":       "Success state color",
+  "--color-warning":       "Warning state color",
+  "--color-error":         "Error / danger state color",
+  "--color-border":        "Default border color",
+  "--color-muted":         "Muted background",
+  "--color-muted-fg":      "Muted / secondary text",
+  "--color-shadow":        "Box shadow for elevated surfaces",
+
+  "--btn-radius":          "Button border radius",
+  "--input-radius":        "Input border radius",
+  "--card-radius":         "Card border radius",
+  "--card-padding":        "Card internal padding",
+  "--card-shadow":         "Card box shadow"
+}

@@ -2,6 +2,9 @@
   "name": "docs",
   "type": "module",
   "scripts": {
+    "generate": "node ../../tools/generate-tokens.mjs",
+    "predev": "node ../../tools/generate-tokens.mjs",
+    "prebuild": "node ../../tools/generate-tokens.mjs",
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview"

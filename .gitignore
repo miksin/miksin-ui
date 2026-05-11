@@ -4,3 +4,4 @@ dist/
 .pnpm-store/
 .superpowers/
 .playwright-mcp/
+apps/docs/src/generated/
