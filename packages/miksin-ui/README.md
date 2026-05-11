@@ -10,17 +10,15 @@ npm install miksin-ui
 
 ## Usage
 
-### With Tailwind v3
+### With Tailwind v4
 
-```js
-// tailwind.config.js
-import miksinui from 'miksin-ui/tailwind'
-
-export default {
-  content: ['./src/**/*.{html,js,ts,jsx,tsx,astro,vue,svelte}'],
-  plugins: [miksinui],
-}
+```css
+/* app.css */
+@import "tailwindcss";
+@import "miksin-ui/dist/miksin-ui.css";
 ```
+
+Token utilities (`bg-primary`, `text-fg`, `border-border`, `rounded-base`, etc.) are generated automatically.
 
 ### Without Tailwind
 

@@ -23,18 +23,14 @@ import 'miksin-ui/dist/miksin-ui.css'
 <span class="badge">Label</span>
 ```
 
-### Tailwind v3 plugin
+### Tailwind v4
 
-Registers all component classes and bridges design tokens into Tailwind's theme.
+Import the CSS after Tailwind. Token utilities (`bg-primary`, `text-fg`, `border-border`, `rounded-base`, etc.) are generated automatically from the `@theme inline` block.
 
-```js
-// tailwind.config.js
-import miksinui from 'miksin-ui/tailwind'
-
-export default {
-  content: ['./src/**/*.{html,js,ts,jsx,tsx,astro,vue,svelte}'],
-  plugins: [miksinui],
-}
+```css
+/* app.css */
+@import "tailwindcss";
+@import "miksin-ui/dist/miksin-ui.css";
 ```
 
 ## Components
