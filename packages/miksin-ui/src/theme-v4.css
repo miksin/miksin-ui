@@ -1,0 +1,26 @@
+@theme inline {
+  /* Primitive colors */
+  --color-primary-500:   var(--color-primary-500);
+  --color-secondary-500: var(--color-secondary-500);
+  --color-success-500:   var(--color-success-500);
+  --color-warning-500:   var(--color-warning-500);
+  --color-error-500:     var(--color-error-500);
+  --color-neutral-50:    var(--color-neutral-50);
+  --color-neutral-900:   var(--color-neutral-900);
+
+  /* Semantic colors */
+  --color-bg:           var(--color-bg);
+  --color-fg:           var(--color-fg);
+  --color-primary:      var(--color-primary);
+  --color-primary-text: var(--color-primary-text);
+  --color-secondary:    var(--color-secondary);
+  --color-success:      var(--color-success);
+  --color-warning:      var(--color-warning);
+  --color-error:        var(--color-error);
+  --color-border:       var(--color-border);
+  --color-muted:        var(--color-muted);
+  --color-muted-fg:     var(--color-muted-fg);
+
+  /* Radius */
+  --radius-base: var(--radius-base);
+}

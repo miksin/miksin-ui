@@ -20,6 +20,30 @@ test('CSS variables defined', () => {
   assert.ok(css.includes('--radius-base'), '--radius-base missing')
 })
 
+test('@theme inline block present', () => {
+  const css = readFileSync(distPath, 'utf-8')
+  assert.ok(css.includes('@theme inline'), '@theme inline block missing from dist')
+})
+
+test('@theme inline exposes all tokens', () => {
+  const css = readFileSync(distPath, 'utf-8')
+  const themeMatch = css.match(/@theme inline\s*\{([^}]+)\}/)
+  assert.ok(themeMatch, '@theme inline block not found or malformed')
+  const block = themeMatch[1]
+  const tokens = [
+    '--color-primary-500', '--color-secondary-500', '--color-success-500',
+    '--color-warning-500', '--color-error-500',
+    '--color-neutral-50', '--color-neutral-900',
+    '--color-bg', '--color-fg', '--color-primary', '--color-primary-text',
+    '--color-secondary', '--color-success', '--color-warning', '--color-error',
+    '--color-border', '--color-muted', '--color-muted-fg',
+    '--radius-base',
+  ]
+  for (const token of tokens) {
+    assert.ok(block.includes(token), `${token} missing from @theme inline block`)
+  }
+})
+
 test('button classes present', () => {
   const css = readFileSync(distPath, 'utf-8')
   assert.ok(css.includes('.btn'), '.btn missing')
