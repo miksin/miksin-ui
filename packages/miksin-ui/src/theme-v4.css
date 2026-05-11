@@ -23,4 +23,7 @@
 
   /* Radius */
   --radius-base: var(--radius-base);
+
+  /* --color-shadow intentionally excluded: it is a shadow value, not a color.
+     Exposing it in @theme would generate misleading bg-shadow/text-shadow utilities. */
 }

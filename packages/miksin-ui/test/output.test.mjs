@@ -20,16 +20,13 @@ test('CSS variables defined', () => {
   assert.ok(css.includes('--radius-base'), '--radius-base missing')
 })
 
-test('@theme inline block present', () => {
-  const css = readFileSync(distPath, 'utf-8')
-  assert.ok(css.includes('@theme inline'), '@theme inline block missing from dist')
-})
-
 test('@theme inline exposes all tokens', () => {
   const css = readFileSync(distPath, 'utf-8')
-  const themeMatch = css.match(/@theme inline\s*\{([^}]+)\}/)
-  assert.ok(themeMatch, '@theme inline block not found or malformed')
-  const block = themeMatch[1]
+  const startIdx = css.indexOf('@theme inline')
+  assert.ok(startIdx !== -1, '@theme inline block not found in dist')
+  const braceOpen = css.indexOf('{', startIdx)
+  const braceClose = css.indexOf('}', braceOpen)
+  const block = css.slice(braceOpen + 1, braceClose)
   const tokens = [
     '--color-primary-500', '--color-secondary-500', '--color-success-500',
     '--color-warning-500', '--color-error-500',
