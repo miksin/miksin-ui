@@ -7,7 +7,14 @@ const cssPath = path.join(__dirname, 'dist', 'miksin-ui.css')
 
 module.exports = plugin(
   function ({ addBase, addComponents }) {
-    const css = fs.readFileSync(cssPath, 'utf-8')
+    let css
+    try {
+      css = fs.readFileSync(cssPath, 'utf-8')
+    } catch {
+      throw new Error(
+        `[miksin-ui] Could not read ${cssPath}. Run "pnpm build" in packages/miksin-ui first.`
+      )
+    }
     const root = postcss.parse(css)
     root.each((node) => {
       if (node.type === 'atrule' && node.name === 'layer') {
