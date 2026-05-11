@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>miksin-ui Theme Configurator</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 14px;
+    background: #0f0f0f;
+    color: #e0e0e0;
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    grid-template-rows: 48px 1fr auto;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  /* ── Header ── */
+  header {
+    grid-column: 1 / -1;
+    background: #1a1a1a;
+    border-bottom: 1px solid #2a2a2a;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 20px;
+  }
+  header h1 { font-size: 15px; font-weight: 600; color: #fff; }
+  header span { font-size: 12px; color: #666; }
+  header .badge-pkg {
+    margin-left: auto;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: #252525;
+    color: #888;
+    border: 1px solid #333;
+  }
+
+  /* ── Sidebar ── */
+  aside {
+    background: #141414;
+    border-right: 1px solid #222;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .section-title {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #555;
+    margin-bottom: 10px;
+  }
+
+  /* Color control */
+  .color-block { display: flex; flex-direction: column; gap: 8px; }
+
+  .color-row {
+    display: grid;
+    grid-template-columns: 70px 1fr 36px;
+    align-items: center;
+    gap: 8px;
+  }
+  .color-label { font-size: 12px; color: #aaa; }
+  .color-swatch {
+    width: 28px; height: 28px;
+    border-radius: 6px;
+    border: 2px solid #333;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: border-color 0.15s;
+  }
+  .color-swatch:hover { border-color: #555; }
+
+  .slider-stack { display: flex; flex-direction: column; gap: 4px; }
+  .slider-row { display: flex; align-items: center; gap: 6px; }
+  .slider-lbl { font-size: 10px; color: #555; width: 14px; flex-shrink: 0; }
+
+  input[type=range] {
+    -webkit-appearance: none;
+    height: 4px;
+    border-radius: 2px;
+    outline: none;
+    flex: 1;
+    cursor: pointer;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid #555;
+    cursor: pointer;
+  }
+  /* Hue slider */
+  .hue-slider {
+    background: linear-gradient(to right,
+      oklch(65% 0.22 0), oklch(65% 0.22 30), oklch(65% 0.22 60),
+      oklch(65% 0.22 90), oklch(65% 0.22 120), oklch(65% 0.22 150),
+      oklch(65% 0.22 180), oklch(65% 0.22 210), oklch(65% 0.22 240),
+      oklch(65% 0.22 270), oklch(65% 0.22 300), oklch(65% 0.22 330),
+      oklch(65% 0.22 360));
+  }
+  .lt-slider { background: linear-gradient(to right, #000, #fff); }
+  .ch-slider { background: linear-gradient(to right, #888, #f00); }
+
+  /* Radius control */
+  .radius-presets {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .radius-btn {
+    padding: 6px 12px;
+    background: #1e1e1e;
+    border: 1px solid #2e2e2e;
+    border-radius: 6px;
+    color: #aaa;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  .radius-btn:hover { border-color: #444; color: #ccc; }
+  .radius-btn.active { border-color: var(--p-color, #ff69b4); color: #fff; background: #222; }
+  .radius-preview {
+    width: 28px; height: 20px;
+    background: #444;
+  }
+
+  /* Neutral scale */
+  .neutral-scale { display: flex; flex-direction: column; gap: 6px; margin-top: 6px; }
+  .neutral-scale-row {
+    display: grid;
+    grid-template-columns: 58px 1fr 28px;
+    align-items: center;
+    gap: 6px;
+  }
+  .neutral-scale-lbl { font-size: 11px; color: #777; }
+  .neutral-scale-swatch {
+    width: 22px; height: 22px;
+    border-radius: 4px;
+    border: 1px solid rgba(255,255,255,0.08);
+    flex-shrink: 0;
+  }
+  .neutral-divider { height: 1px; background: #222; margin: 4px 0; }
+  .neutral-tint-label {
+    font-size: 11px;
+    color: #555;
+    margin-bottom: 6px;
+  }
+
+  /* Shadow control */
+  .shadow-presets { display: flex; flex-direction: column; gap: 6px; }
+  .shadow-btn {
+    padding: 8px 12px;
+    background: #1e1e1e;
+    border: 1px solid #2e2e2e;
+    border-radius: 6px;
+    color: #aaa;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .shadow-btn:hover { border-color: #444; color: #ccc; }
+  .shadow-btn.active { border-color: var(--p-color, #ff69b4); color: #fff; background: #222; }
+  .shadow-demo {
+    width: 32px; height: 20px;
+    background: #555;
+    border-radius: 4px;
+  }
+
+  /* ── Preview panel ── */
+  main {
+    background: #f5f5f5;
+    overflow-y: auto;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  /* Theme toggle */
+  .preview-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .preview-header h2 { font-size: 13px; color: #888; font-weight: 500; }
+  .theme-toggle {
+    display: flex;
+    background: #e0e0e0;
+    border-radius: 6px;
+    padding: 2px;
+    gap: 2px;
+  }
+  .theme-toggle button {
+    padding: 4px 12px;
+    border: none;
+    background: transparent;
+    border-radius: 4px;
+    font-size: 11px;
+    cursor: pointer;
+    color: #888;
+    transition: all 0.15s;
+  }
+  .theme-toggle button.active {
+    background: #fff;
+    color: #222;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+  }
+
+  /* Preview sections */
+  .preview-section {
+    background: var(--preview-bg, #fff);
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid var(--preview-border, #e8e8e8);
+  }
+  .preview-section h3 {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--preview-muted, #999);
+    margin-bottom: 16px;
+  }
+
+  .preview-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+  }
+
+  /* ── Output panel ── */
+  footer {
+    grid-column: 1 / -1;
+    background: #111;
+    border-top: 1px solid #222;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  footer pre {
+    flex: 1;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 11px;
+    color: #888;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .copy-btn {
+    padding: 6px 16px;
+    background: var(--p-color, #ff69b4);
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: opacity 0.15s;
+  }
+  .copy-btn:hover { opacity: 0.85; }
+
+  /* ── Components rendered in preview ── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 16px;
+    height: 36px;
+    border: none;
+    border-radius: var(--btn-r, 6px);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.1s;
+  }
+  .btn:hover { opacity: 0.88; }
+  .btn:active { transform: scale(0.97); }
+  .btn-primary { background: var(--c-primary); color: var(--c-primary-text); }
+  .btn-secondary { background: var(--c-secondary); color: #fff; }
+  .btn-success { background: var(--c-success); color: #fff; }
+  .btn-warning { background: var(--c-warning); color: #fff; }
+  .btn-error { background: var(--c-error); color: #fff; }
+  .btn-ghost {
+    background: transparent;
+    border: 1.5px solid var(--c-border);
+    color: var(--c-fg);
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .badge-primary { background: color-mix(in oklch, var(--c-primary) 15%, transparent); color: var(--c-primary); }
+  .badge-secondary { background: color-mix(in oklch, var(--c-secondary) 15%, transparent); color: var(--c-secondary); }
+  .badge-success { background: color-mix(in oklch, var(--c-success) 15%, transparent); color: var(--c-success); }
+  .badge-warning { background: color-mix(in oklch, var(--c-warning) 20%, transparent); color: color-mix(in oklch, var(--c-warning) 70%, #000); }
+  .badge-error { background: color-mix(in oklch, var(--c-error) 15%, transparent); color: var(--c-error); }
+
+  .card-preview {
+    background: var(--preview-bg, #fff);
+    border: 1px solid var(--c-border);
+    border-radius: var(--card-r, 12px);
+    padding: 20px;
+    box-shadow: var(--c-shadow);
+    min-width: 200px;
+    flex: 1;
+  }
+  .card-preview h4 { font-size: 15px; color: var(--c-fg); margin-bottom: 6px; }
+  .card-preview p { font-size: 13px; color: var(--c-muted-fg); line-height: 1.5; }
+  .card-preview .card-footer { margin-top: 14px; display: flex; gap: 8px; }
+
+  .input-preview {
+    display: block;
+    width: 220px;
+    height: 36px;
+    padding: 0 12px;
+    border: 1.5px solid var(--c-border);
+    border-radius: var(--btn-r, 6px);
+    background: var(--preview-bg, #fff);
+    color: var(--c-fg);
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .input-preview:focus { border-color: var(--c-primary); }
+  .input-preview::placeholder { color: var(--c-muted-fg); }
+
+  .toggle-preview {
+    width: 44px; height: 24px;
+    background: var(--c-muted);
+    border-radius: 999px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+  .toggle-preview.on { background: var(--c-primary); }
+  .toggle-preview::after {
+    content: '';
+    position: absolute;
+    width: 18px; height: 18px;
+    background: #fff;
+    border-radius: 50%;
+    top: 3px; left: 3px;
+    transition: left 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+  .toggle-preview.on::after { left: 23px; }
+</style>
+</head>
+<body>
+
+<header>
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:#888">
+    <circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
+  </svg>
+  <h1>miksin-ui</h1>
+  <span>Theme Configurator</span>
+  <span class="badge-pkg">v0.1.0</span>
+</header>
+
+<!-- ── Sidebar ── -->
+<aside>
+
+  <!-- Colors -->
+  <div>
+    <div class="section-title">Colors</div>
+    <div class="color-block" id="colorControls"></div>
+  </div>
+
+  <!-- Neutrals -->
+  <div>
+    <div class="section-title">Neutrals</div>
+    <div id="neutralControls"></div>
+  </div>
+
+  <!-- Border Radius -->
+  <div>
+    <div class="section-title">Border Radius</div>
+    <div class="radius-presets" id="radiusPresets"></div>
+  </div>
+
+  <!-- Shadows -->
+  <div>
+    <div class="section-title">Shadow</div>
+    <div class="shadow-presets" id="shadowPresets"></div>
+  </div>
+
+</aside>
+
+<!-- ── Preview ── -->
+<main id="previewPanel">
+  <div class="preview-header">
+    <h2>Live Preview</h2>
+    <div class="theme-toggle">
+      <button class="active" onclick="setTheme('light',this)">Light</button>
+      <button onclick="setTheme('dark',this)">Dark</button>
+    </div>
+  </div>
+
+  <!-- Buttons -->
+  <div class="preview-section">
+    <h3>Buttons</h3>
+    <div class="preview-row">
+      <button class="btn btn-primary">Primary</button>
+      <button class="btn btn-secondary">Secondary</button>
+      <button class="btn btn-success">Success</button>
+      <button class="btn btn-warning">Warning</button>
+      <button class="btn btn-error">Error</button>
+      <button class="btn btn-ghost">Ghost</button>
+    </div>
+  </div>
+
+  <!-- Badges -->
+  <div class="preview-section">
+    <h3>Badges</h3>
+    <div class="preview-row">
+      <span class="badge badge-primary">primary</span>
+      <span class="badge badge-secondary">secondary</span>
+      <span class="badge badge-success">success</span>
+      <span class="badge badge-warning">warning</span>
+      <span class="badge badge-error">error</span>
+    </div>
+  </div>
+
+  <!-- Cards -->
+  <div class="preview-section">
+    <h3>Cards</h3>
+    <div class="preview-row" style="align-items:stretch">
+      <div class="card-preview">
+        <h4>Card Title</h4>
+        <p>A simple card component with shadow and rounded corners.</p>
+        <div class="card-footer">
+          <button class="btn btn-primary" style="height:30px;font-size:13px;padding:0 12px">Action</button>
+          <button class="btn btn-ghost" style="height:30px;font-size:13px;padding:0 12px">Cancel</button>
+        </div>
+      </div>
+      <div class="card-preview">
+        <h4>Another Card</h4>
+        <p>Cards adapt to the current theme's background, border, and shadow tokens.</p>
+        <div class="card-footer">
+          <span class="badge badge-success">active</span>
+          <span class="badge badge-secondary">featured</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Form -->
+  <div class="preview-section">
+    <h3>Form Controls</h3>
+    <div class="preview-row" style="align-items:flex-start;flex-wrap:wrap">
+      <input class="input-preview" placeholder="Text input…" />
+      <input class="input-preview" placeholder="Focused…" style="border-color:var(--c-primary)" />
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="toggle-preview" onclick="this.classList.toggle('on')"></div>
+        <span style="font-size:13px;color:var(--c-muted-fg)">Toggle</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="toggle-preview on" onclick="this.classList.toggle('on')"></div>
+        <span style="font-size:13px;color:var(--c-muted-fg)">On</span>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ── Output ── -->
+<footer>
+  <pre id="cssOutput"></pre>
+  <button class="copy-btn" onclick="copyCSS()">Copy CSS</button>
+</footer>
+
+<script>
+// ─── State ────────────────────────────────────────────────────────────────────
+const colors = {
+  primary:   { l: 61, c: 0.16, h: 360 },
+  secondary: { l: 66, c: 0.16, h: 221 },
+  success:   { l: 67, c: 0.16, h: 138 },
+  warning:   { l: 77, c: 0.16, h:  77 },
+  error:     { l: 59, c: 0.19, h:  25 },
+}
+
+const radiusOptions = [
+  { label: 'None',   value: '0rem',      px: 0 },
+  { label: 'Small',  value: '0.25rem',   px: 4 },
+  { label: 'Base',   value: '0.375rem',  px: 6 },
+  { label: 'Medium', value: '0.5rem',    px: 8 },
+  { label: 'Large',  value: '0.75rem',   px: 12 },
+  { label: 'XL',     value: '1rem',      px: 16 },
+]
+
+const shadowOptions = [
+  { label: 'None',     value: 'none',                                                           demo: '0 0 0 1px #ccc' },
+  { label: 'Subtle',   value: '0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04)',        demo: '0 1px 4px rgba(0,0,0,0.15)' },
+  { label: 'Medium',   value: '0 4px 12px rgba(0,0,0,0.10), 0 2px 4px rgba(0,0,0,0.06)',       demo: '0 3px 8px rgba(0,0,0,0.2)' },
+  { label: 'Elevated', value: '0 10px 30px rgba(0,0,0,0.12), 0 4px 10px rgba(0,0,0,0.08)',     demo: '0 6px 16px rgba(0,0,0,0.25)' },
+]
+
+// Neutral tint: h = hue, c = chroma (0 = pure gray)
+const neutral = { h: 0, c: 0 }
+
+// Lightness stops — label, token name, current L, min, max
+const neutralStops = [
+  { name: 'neutral-50',  label: 'Background', l: 98, min: 80, max: 100 },
+  { name: 'muted',       label: 'Muted bg',   l: 92, min: 70, max: 99  },
+  { name: 'border',      label: 'Border',     l: 88, min: 55, max: 97  },
+  { name: 'muted-fg',    label: 'Muted text', l: 45, min: 20, max: 75  },
+  { name: 'neutral-900', label: 'Foreground', l: 15, min:  5, max: 45  },
+]
+
+let currentRadius = '1rem'
+let currentShadow = shadowOptions[1].value
+let isDark = false
+
+// ─── Build sidebar controls ────────────────────────────────────────────────────
+function buildColorControls() {
+  const container = document.getElementById('colorControls')
+  Object.entries(colors).forEach(([key, val]) => {
+    const row = document.createElement('div')
+    row.className = 'color-row'
+
+    const lbl = document.createElement('div')
+    lbl.className = 'color-label'
+    lbl.textContent = key.charAt(0).toUpperCase() + key.slice(1)
+
+    const stack = document.createElement('div')
+    stack.className = 'slider-stack'
+
+    // Hue
+    const hueRow = makeSliderRow('H', 0, 360, val.h, v => {
+      colors[key].h = +v; applyColors(); updateSwatch(key)
+    }, 'hue-slider')
+    // Lightness
+    const ltRow = makeSliderRow('L', 30, 90, val.l, v => {
+      colors[key].l = +v; applyColors(); updateSwatch(key)
+    }, 'lt-slider')
+    // Chroma
+    const chRow = makeSliderRow('C', 0, 35, val.c * 100, v => {
+      colors[key].c = v / 100; applyColors(); updateSwatch(key)
+    }, 'ch-slider')
+
+    stack.append(hueRow, ltRow, chRow)
+
+    const swatch = document.createElement('div')
+    swatch.className = 'color-swatch'
+    swatch.id = 'swatch-' + key
+    swatch.style.background = oklch(val)
+
+    row.append(lbl, stack, swatch)
+    container.appendChild(row)
+  })
+}
+
+function makeSliderRow(label, min, max, value, onChange, cls) {
+  const row = document.createElement('div')
+  row.className = 'slider-row'
+  const lbl = document.createElement('span')
+  lbl.className = 'slider-lbl'
+  lbl.textContent = label
+  const input = document.createElement('input')
+  input.type = 'range'
+  input.min = min; input.max = max
+  input.step = label === 'C' ? 1 : 1
+  input.value = value
+  input.className = cls
+  input.addEventListener('input', e => onChange(e.target.value))
+  row.append(lbl, input)
+  return row
+}
+
+function buildNeutralControls() {
+  const container = document.getElementById('neutralControls')
+
+  // Tint controls
+  const tintLabel = document.createElement('div')
+  tintLabel.className = 'neutral-tint-label'
+  tintLabel.textContent = 'Tint hue & strength'
+  const tintStack = document.createElement('div')
+  tintStack.className = 'slider-stack'
+  tintStack.append(
+    makeSliderRow('H', 0, 360, neutral.h, v => { neutral.h = +v; applyColors(); updateNeutralSwatches() }, 'hue-slider'),
+    makeSliderRow('C', 0, 5, neutral.c * 100, v => { neutral.c = v / 100; applyColors(); updateNeutralSwatches() }, 'ch-slider')
+  )
+
+  const divider = document.createElement('div')
+  divider.className = 'neutral-divider'
+
+  // Per-stop lightness sliders
+  const scale = document.createElement('div')
+  scale.className = 'neutral-scale'
+  neutralStops.forEach(stop => {
+    const row = document.createElement('div')
+    row.className = 'neutral-scale-row'
+
+    const lbl = document.createElement('span')
+    lbl.className = 'neutral-scale-lbl'
+    lbl.textContent = stop.label
+
+    const slider = document.createElement('input')
+    slider.type = 'range'
+    slider.min = stop.min; slider.max = stop.max; slider.step = 1
+    slider.value = stop.l
+    slider.className = 'lt-slider'
+    slider.addEventListener('input', e => {
+      stop.l = +e.target.value; applyColors(); updateNeutralSwatches()
+    })
+
+    const swatch = document.createElement('div')
+    swatch.className = 'neutral-scale-swatch'
+    swatch.id = 'nswatch-' + stop.name
+
+    row.append(lbl, slider, swatch)
+    scale.appendChild(row)
+  })
+
+  container.append(tintLabel, tintStack, divider, scale)
+  updateNeutralSwatches()
+}
+
+function neutralOklch(l) {
+  return `oklch(${l}% ${neutral.c} ${neutral.h})`
+}
+
+function neutralL(name) {
+  return neutralStops.find(s => s.name === name).l
+}
+
+function updateNeutralSwatches() {
+  neutralStops.forEach(stop => {
+    const el = document.getElementById('nswatch-' + stop.name)
+    if (el) el.style.background = neutralOklch(stop.l)
+  })
+}
+
+function buildRadiusControls() {
+  const container = document.getElementById('radiusPresets')
+  radiusOptions.forEach(opt => {
+    const btn = document.createElement('button')
+    btn.className = 'radius-btn' + (opt.value === currentRadius ? ' active' : '')
+    btn.onclick = () => {
+      currentRadius = opt.value
+      document.querySelectorAll('.radius-btn').forEach(b => b.classList.remove('active'))
+      btn.classList.add('active')
+      applyColors()
+    }
+    const demo = document.createElement('div')
+    demo.className = 'radius-preview'
+    demo.style.borderRadius = opt.px + 'px'
+    const lbl = document.createElement('span')
+    lbl.textContent = opt.label
+    btn.append(demo, lbl)
+    container.appendChild(btn)
+  })
+}
+
+function buildShadowControls() {
+  const container = document.getElementById('shadowPresets')
+  shadowOptions.forEach(opt => {
+    const btn = document.createElement('button')
+    btn.className = 'shadow-btn' + (opt.value === currentShadow ? ' active' : '')
+    btn.onclick = () => {
+      currentShadow = opt.value
+      document.querySelectorAll('.shadow-btn').forEach(b => b.classList.remove('active'))
+      btn.classList.add('active')
+      applyColors()
+    }
+    const demo = document.createElement('div')
+    demo.className = 'shadow-demo'
+    demo.style.boxShadow = opt.demo
+    const lbl = document.createElement('span')
+    lbl.textContent = opt.label
+    btn.append(demo, lbl)
+    container.appendChild(btn)
+  })
+}
+
+// ─── Apply to preview ─────────────────────────────────────────────────────────
+function oklch({ l, c, h }) {
+  return `oklch(${l}% ${c} ${h})`
+}
+
+function primaryTextColor() {
+  // Use light text for dark/saturated primaries, dark text for light ones
+  return colors.primary.l < 70 ? 'oklch(98% 0 0)' : 'oklch(15% 0 0)'
+}
+
+function applyColors() {
+  const panel = document.getElementById('previewPanel')
+  const cardRadius = `calc(${currentRadius} * ${currentRadius === '0rem' ? '1' : '2'})`
+
+  // Color vars
+  panel.style.setProperty('--c-primary', oklch(colors.primary))
+  panel.style.setProperty('--c-secondary', oklch(colors.secondary))
+  panel.style.setProperty('--c-success', oklch(colors.success))
+  panel.style.setProperty('--c-warning', oklch(colors.warning))
+  panel.style.setProperty('--c-error', oklch(colors.error))
+  panel.style.setProperty('--c-primary-text', primaryTextColor())
+
+  // Radius
+  panel.style.setProperty('--btn-r', currentRadius)
+  panel.style.setProperty('--card-r', `calc(${currentRadius} * 2)`)
+
+  // Shadow
+  panel.style.setProperty('--c-shadow', currentShadow)
+
+  // Theme colors (with per-stop lightness + tint)
+  const bg   = neutralL('neutral-50')
+  const fg   = neutralL('neutral-900')
+  const bdr  = neutralL('border')
+  const mut  = neutralL('muted')
+  const mfg  = neutralL('muted-fg')
+  if (isDark) {
+    panel.style.setProperty('--preview-bg', neutralOklch(fg))
+    panel.style.setProperty('--preview-border', neutralOklch(Math.round(fg + (bdr - fg) * 0.4)))
+    panel.style.setProperty('--c-fg', neutralOklch(bg))
+    panel.style.setProperty('--c-muted-fg', neutralOklch(Math.round(mfg + 20)))
+    panel.style.setProperty('--c-border', neutralOklch(Math.round(fg + (bdr - fg) * 0.6)))
+    panel.style.setProperty('--c-muted', neutralOklch(Math.round(fg + 5)))
+  } else {
+    panel.style.setProperty('--preview-bg', neutralOklch(bg))
+    panel.style.setProperty('--preview-border', neutralOklch(mut))
+    panel.style.setProperty('--c-fg', neutralOklch(fg))
+    panel.style.setProperty('--c-muted-fg', neutralOklch(mfg))
+    panel.style.setProperty('--c-border', neutralOklch(bdr))
+    panel.style.setProperty('--c-muted', neutralOklch(mut))
+  }
+
+  // Active button accent color for sidebar
+  document.body.style.setProperty('--p-color', oklch(colors.primary))
+
+  updateCSSOutput()
+}
+
+function updateSwatch(key) {
+  const el = document.getElementById('swatch-' + key)
+  if (el) el.style.background = oklch(colors[key])
+}
+
+// ─── CSS output ───────────────────────────────────────────────────────────────
+function generateCSS() {
+  const c = colors
+  return `:root {
+  /* Primitive */
+  --color-primary-500:   ${oklch(c.primary)};
+  --color-secondary-500: ${oklch(c.secondary)};
+  --color-success-500:   ${oklch(c.success)};
+  --color-warning-500:   ${oklch(c.warning)};
+  --color-error-500:     ${oklch(c.error)};
+  --color-neutral-50:    ${neutralOklch(neutralL('neutral-50'))};
+  --color-neutral-900:   ${neutralOklch(neutralL('neutral-900'))};
+  --radius-base:         ${currentRadius};
+
+  /* Semantic */
+  --color-bg:            var(--color-neutral-50);
+  --color-fg:            var(--color-neutral-900);
+  --color-primary:       var(--color-primary-500);
+  --color-primary-text:  ${primaryTextColor()};
+  --color-secondary:     var(--color-secondary-500);
+  --color-success:       var(--color-success-500);
+  --color-warning:       var(--color-warning-500);
+  --color-error:         var(--color-error-500);
+  --color-border:        ${neutralOklch(neutralL('border'))};
+  --color-muted:         ${neutralOklch(neutralL('muted'))};
+  --color-muted-fg:      ${neutralOklch(neutralL('muted-fg'))};
+  --color-shadow:        ${currentShadow};
+
+  /* Component */
+  --btn-radius:    var(--radius-base);
+  --input-radius:  var(--radius-base);
+  --card-radius:   calc(var(--radius-base) * 2);
+  --card-padding:  1.5rem;
+  --card-shadow:   var(--color-shadow);
+}
+
+[data-theme="dark"] {
+  --color-bg:       ${neutralOklch(neutralL('neutral-900'))};
+  --color-fg:       ${neutralOklch(Math.min(neutralL('neutral-50'), 97))};
+  --color-border:   ${neutralOklch(Math.round(neutralL('neutral-900') + (neutralL('border') - neutralL('neutral-900')) * 0.6))};
+  --color-muted:    ${neutralOklch(Math.round(neutralL('neutral-900') + 5))};
+  --color-muted-fg: ${neutralOklch(Math.min(neutralL('muted-fg') + 20, 75))};
+}`
+}
+
+function updateCSSOutput() {
+  const css = generateCSS()
+  const compact = css.replace(/\s+/g, ' ').trim()
+  document.getElementById('cssOutput').textContent = compact
+}
+
+function copyCSS() {
+  navigator.clipboard.writeText(generateCSS()).then(() => {
+    const btn = document.querySelector('.copy-btn')
+    btn.textContent = 'Copied!'
+    setTimeout(() => btn.textContent = 'Copy CSS', 1500)
+  })
+}
+
+// ─── Theme toggle ─────────────────────────────────────────────────────────────
+function setTheme(mode, btn) {
+  isDark = mode === 'dark'
+  document.querySelectorAll('.theme-toggle button').forEach(b => b.classList.remove('active'))
+  btn.classList.add('active')
+  document.getElementById('previewPanel').style.background = isDark ? '#1a1a1a' : '#f5f5f5'
+  document.querySelectorAll('.preview-section').forEach(s => {
+    s.style.borderColor = isDark ? 'oklch(25% 0 0)' : ''
+  })
+  applyColors()
+}
+
+// ─── Init ─────────────────────────────────────────────────────────────────────
+buildColorControls()
+buildNeutralControls()
+buildRadiusControls()
+buildShadowControls()
+applyColors()
+</script>
+</body>
+</html>

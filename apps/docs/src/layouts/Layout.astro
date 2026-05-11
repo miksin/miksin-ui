@@ -21,30 +21,93 @@ const currentPath = Astro.url.pathname
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title} — miksin-ui</title>
+    <!-- Anti-flash: apply saved theme before first paint -->
+    <script is:inline>
+      if (localStorage.getItem('theme') === 'dark')
+        document.documentElement.setAttribute('data-theme', 'dark')
+    </script>
   </head>
   <body style="background-color: var(--color-bg); color: var(--color-fg);" class="min-h-screen">
     <div class="flex min-h-screen">
-      <aside class="w-56 flex-shrink-0 border-r p-6 flex flex-col gap-1" style="border-color: var(--color-border);">
-        <a href="/" class="font-bold text-lg mb-6 block">miksin-ui</a>
+
+      <!-- Sidebar -->
+      <aside class="w-56 flex-shrink-0 border-r p-5 flex flex-col gap-1" style="border-color: var(--color-border); background-color: var(--color-bg);">
+
+        <!-- Logo + theme toggle -->
+        <div class="flex items-center justify-between mb-5">
+          <a href="/" class="font-bold text-base flex items-center gap-2">
+            miksin-ui
+            <span class="badge" style="font-size:10px;padding:1px 7px;">v0.1</span>
+          </a>
+          <button
+            id="theme-toggle"
+            aria-label="Toggle dark mode"
+            style="width:32px;height:32px;padding:0;display:flex;align-items:center;justify-content:center;background:transparent;border:1.5px solid var(--color-border);border-radius:var(--radius-base);cursor:pointer;color:var(--color-muted-fg);transition:color 0.15s,border-color 0.15s,background-color 0.15s;"
+          >
+            <!-- Sun icon (shown in dark mode) -->
+            <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+              <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+            </svg>
+            <!-- Moon icon (shown in light mode) -->
+            <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Nav -->
         {navItems.map(({ href, label }) => (
           <a
             href={href}
-            class:list={['block py-1.5 px-3 rounded text-sm', currentPath === href ? 'font-semibold' : 'opacity-70 hover:opacity-100']}
-            style={currentPath === href ? 'background-color: var(--color-muted);' : ''}
+            class:list={['block py-1.5 px-3 text-sm transition-opacity', currentPath === href ? 'font-semibold rounded-lg' : 'opacity-60 hover:opacity-100']}
+            style={currentPath === href ? 'background-color: var(--color-muted); border-radius: var(--radius-base);' : ''}
           >{label}</a>
         ))}
-        <p class="text-xs font-semibold uppercase tracking-wide mt-6 mb-1 px-3" style="color: var(--color-muted-fg);">Components</p>
+
+        <p class="text-xs font-semibold uppercase tracking-wider mt-5 mb-1 px-3" style="color: var(--color-muted-fg);">Components</p>
+
         {components.map(({ href, label }) => (
           <a
             href={href}
-            class:list={['block py-1.5 px-3 rounded text-sm', currentPath === href ? 'font-semibold' : 'opacity-70 hover:opacity-100']}
-            style={currentPath === href ? 'background-color: var(--color-muted);' : ''}
+            class:list={['block py-1.5 px-3 text-sm transition-opacity', currentPath === href ? 'font-semibold' : 'opacity-60 hover:opacity-100']}
+            style={currentPath === href ? 'background-color: var(--color-muted); border-radius: var(--radius-base);' : ''}
           >{label}</a>
         ))}
+
       </aside>
-      <main class="flex-1 p-10 max-w-3xl mx-auto">
+
+      <!-- Main content -->
+      <main class="flex-1 p-10 max-w-3xl">
         <slot />
       </main>
+
     </div>
+
+    <script>
+      const btn = document.getElementById('theme-toggle')!
+      const sun = document.getElementById('icon-sun')!
+      const moon = document.getElementById('icon-moon')!
+      const html = document.documentElement
+
+      function applyTheme(dark: boolean) {
+        if (dark) {
+          html.setAttribute('data-theme', 'dark')
+          sun.style.display = 'block'
+          moon.style.display = 'none'
+        } else {
+          html.removeAttribute('data-theme')
+          sun.style.display = 'none'
+          moon.style.display = 'block'
+        }
+      }
+
+      applyTheme(localStorage.getItem('theme') === 'dark')
+
+      btn.addEventListener('click', () => {
+        const dark = html.getAttribute('data-theme') !== 'dark'
+        applyTheme(dark)
+        localStorage.setItem('theme', dark ? 'dark' : 'light')
+      })
+    </script>
   </body>
 </html>
