@@ -1,0 +1,15 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import Demo from '../../components/Demo.astro'
+---
+<Layout title="Toggle">
+  <h1 class="text-3xl font-bold mb-2">Toggle</h1>
+  <p class="mb-8" style="color: var(--color-muted-fg);">On/off switch using a styled checkbox. Use <code>.toggle</code> on <code>&lt;input type="checkbox"&gt;</code>.</p>
+
+  <h2 class="text-xl font-semibold mt-8 mb-3">Default</h2>
+  <Demo code={`<div style="display:flex;gap:1.5rem;align-items:center;">
+  <input class="toggle" type="checkbox" />
+  <input class="toggle" type="checkbox" checked />
+  <input class="toggle" type="checkbox" disabled />
+</div>`} />
+</Layout>

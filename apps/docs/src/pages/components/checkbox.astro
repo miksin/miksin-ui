@@ -1,0 +1,26 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import Demo from '../../components/Demo.astro'
+---
+<Layout title="Checkbox & Radio">
+  <h1 class="text-3xl font-bold mb-2">Checkbox & Radio</h1>
+  <p class="mb-8" style="color: var(--color-muted-fg);">Selection controls. Use <code>.checkbox</code> or <code>.radio</code> on native input elements.</p>
+
+  <h2 class="text-xl font-semibold mt-8 mb-3">Checkbox</h2>
+  <Demo code={`<div style="display:flex;gap:1rem;align-items:center;">
+  <input class="checkbox" type="checkbox" id="c1" />
+  <label for="c1">Unchecked</label>
+  <input class="checkbox" type="checkbox" id="c2" checked />
+  <label for="c2">Checked</label>
+  <input class="checkbox" type="checkbox" disabled />
+  <label>Disabled</label>
+</div>`} />
+
+  <h2 class="text-xl font-semibold mt-8 mb-3">Radio</h2>
+  <Demo code={`<div style="display:flex;gap:1rem;align-items:center;">
+  <input class="radio" type="radio" name="r" id="r1" checked />
+  <label for="r1">Option A</label>
+  <input class="radio" type="radio" name="r" id="r2" />
+  <label for="r2">Option B</label>
+</div>`} />
+</Layout>

@@ -1,0 +1,46 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import Demo from '../../components/Demo.astro'
+---
+<Layout title="Input">
+  <h1 class="text-3xl font-bold mb-2">Input</h1>
+  <p class="mb-8" style="color: var(--color-muted-fg);">Form controls for text input. Classes: <code>.input</code>, <code>.select</code>, <code>.textarea</code>.</p>
+
+  <h2 class="text-xl font-semibold mt-8 mb-3">Text Input</h2>
+  <Demo code={`<input class="input" type="text" placeholder="Enter text..." />`} />
+
+  <h2 class="text-xl font-semibold mt-8 mb-3">Select</h2>
+  <Demo code={`<select class="select">
+  <option>Option A</option>
+  <option>Option B</option>
+  <option>Option C</option>
+</select>`} />
+
+  <h2 class="text-xl font-semibold mt-8 mb-3">Textarea</h2>
+  <Demo code={`<textarea class="textarea" placeholder="Enter longer text..."></textarea>`} />
+
+  <h2 class="text-xl font-semibold mt-8 mb-3">Disabled</h2>
+  <Demo code={`<input class="input" type="text" value="Disabled input" disabled />`} />
+
+  <h2 class="text-xl font-semibold mt-8 mb-3">Class Reference</h2>
+  <table class="w-full text-sm border-collapse">
+    <thead>
+      <tr style="border-bottom: 1.5px solid var(--color-border);">
+        <th class="text-left py-2 pr-4">Class</th>
+        <th class="text-left py-2">Description</th>
+      </tr>
+    </thead>
+    <tbody style="color: var(--color-muted-fg);">
+      {[
+        ['.input', 'Styled text input'],
+        ['.select', 'Styled select dropdown with custom arrow'],
+        ['.textarea', 'Styled textarea (resizable vertically)'],
+      ].map(([cls, desc]) => (
+        <tr style="border-bottom: 1px solid var(--color-border);">
+          <td class="py-2 pr-4 font-mono text-xs" style="color: var(--color-fg);">{cls}</td>
+          <td class="py-2">{desc}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</Layout>

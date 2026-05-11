@@ -1,0 +1,46 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import Demo from '../../components/Demo.astro'
+---
+<Layout title="Button">
+  <h1 class="text-3xl font-bold mb-2">Button</h1>
+  <p class="mb-8" style="color: var(--color-muted-fg);">Clickable element for actions. Use <code>.btn</code> as base class with optional modifiers.</p>
+
+  <h2 class="text-xl font-semibold mt-8 mb-3">Variants</h2>
+  <Demo code={`<button class="btn">Default</button>
+<button class="btn btn-outline">Outline</button>
+<button class="btn btn-ghost">Ghost</button>`} />
+
+  <h2 class="text-xl font-semibold mt-8 mb-3">Sizes</h2>
+  <Demo code={`<button class="btn btn-sm">Small</button>
+<button class="btn">Medium</button>
+<button class="btn btn-lg">Large</button>`} />
+
+  <h2 class="text-xl font-semibold mt-8 mb-3">Disabled</h2>
+  <Demo code={`<button class="btn" disabled>Disabled</button>
+<button class="btn btn-outline" disabled>Disabled outline</button>`} />
+
+  <h2 class="text-xl font-semibold mt-8 mb-3">Class Reference</h2>
+  <table class="w-full text-sm border-collapse">
+    <thead>
+      <tr style="border-bottom: 1.5px solid var(--color-border);">
+        <th class="text-left py-2 pr-4">Class</th>
+        <th class="text-left py-2">Description</th>
+      </tr>
+    </thead>
+    <tbody style="color: var(--color-muted-fg);">
+      {[
+        ['.btn', 'Base button — primary background'],
+        ['.btn-outline', 'Transparent background with primary border'],
+        ['.btn-ghost', 'Transparent, shows muted hover bg'],
+        ['.btn-sm', 'Smaller padding and font size'],
+        ['.btn-lg', 'Larger padding and font size'],
+      ].map(([cls, desc]) => (
+        <tr style="border-bottom: 1px solid var(--color-border);">
+          <td class="py-2 pr-4 font-mono text-xs" style="color: var(--color-fg);">{cls}</td>
+          <td class="py-2">{desc}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</Layout>

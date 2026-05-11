@@ -1,0 +1,38 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import Demo from '../../components/Demo.astro'
+---
+<Layout title="Badge">
+  <h1 class="text-3xl font-bold mb-2">Badge</h1>
+  <p class="mb-8" style="color: var(--color-muted-fg);">Small label for status or categorization. Use <code>.badge</code> as base class.</p>
+
+  <h2 class="text-xl font-semibold mt-8 mb-3">Variants</h2>
+  <Demo code={`<span class="badge">Default</span>
+<span class="badge badge-outline">Outline</span>`} />
+
+  <h2 class="text-xl font-semibold mt-8 mb-3">Sizes</h2>
+  <Demo code={`<span class="badge badge-sm">Small</span>
+<span class="badge">Default</span>`} />
+
+  <h2 class="text-xl font-semibold mt-8 mb-3">Class Reference</h2>
+  <table class="w-full text-sm border-collapse">
+    <thead>
+      <tr style="border-bottom: 1.5px solid var(--color-border);">
+        <th class="text-left py-2 pr-4">Class</th>
+        <th class="text-left py-2">Description</th>
+      </tr>
+    </thead>
+    <tbody style="color: var(--color-muted-fg);">
+      {[
+        ['.badge', 'Base badge — primary background'],
+        ['.badge-outline', 'Transparent with primary border and text'],
+        ['.badge-sm', 'Smaller padding and font size'],
+      ].map(([cls, desc]) => (
+        <tr style="border-bottom: 1px solid var(--color-border);">
+          <td class="py-2 pr-4 font-mono text-xs" style="color: var(--color-fg);">{cls}</td>
+          <td class="py-2">{desc}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</Layout>
