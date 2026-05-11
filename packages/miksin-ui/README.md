@@ -1,6 +1,6 @@
 # miksin-ui
 
-A personal token-based CSS design system — pure component classes that work with any JS framework, with an optional Tailwind v3 plugin.
+A personal token-based CSS design system — pure component classes that work with any JS framework. Tailwind v4 compatible via CSS import.
 
 ## Install
 
