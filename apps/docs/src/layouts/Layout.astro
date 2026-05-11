@@ -1,0 +1,50 @@
+---
+import '../styles/global.css'
+const { title = 'miksin-ui' } = Astro.props
+const navItems = [
+  { href: '/', label: 'Introduction' },
+  { href: '/tokens', label: 'Tokens' },
+]
+const components = [
+  { href: '/components/button', label: 'Button' },
+  { href: '/components/badge', label: 'Badge' },
+  { href: '/components/input', label: 'Input' },
+  { href: '/components/checkbox', label: 'Checkbox & Radio' },
+  { href: '/components/toggle', label: 'Toggle' },
+  { href: '/components/card', label: 'Card' },
+]
+const currentPath = Astro.url.pathname
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} — miksin-ui</title>
+  </head>
+  <body style="background-color: var(--color-bg); color: var(--color-fg);" class="min-h-screen">
+    <div class="flex min-h-screen">
+      <aside class="w-56 flex-shrink-0 border-r p-6 flex flex-col gap-1" style="border-color: var(--color-border);">
+        <a href="/" class="font-bold text-lg mb-6 block">miksin-ui</a>
+        {navItems.map(({ href, label }) => (
+          <a
+            href={href}
+            class:list={['block py-1.5 px-3 rounded text-sm', currentPath === href ? 'font-semibold' : 'opacity-70 hover:opacity-100']}
+            style={currentPath === href ? 'background-color: var(--color-muted);' : ''}
+          >{label}</a>
+        ))}
+        <p class="text-xs font-semibold uppercase tracking-wide mt-6 mb-1 px-3" style="color: var(--color-muted-fg);">Components</p>
+        {components.map(({ href, label }) => (
+          <a
+            href={href}
+            class:list={['block py-1.5 px-3 rounded text-sm', currentPath === href ? 'font-semibold' : 'opacity-70 hover:opacity-100']}
+            style={currentPath === href ? 'background-color: var(--color-muted);' : ''}
+          >{label}</a>
+        ))}
+      </aside>
+      <main class="flex-1 p-10 max-w-3xl mx-auto">
+        <slot />
+      </main>
+    </div>
+  </body>
+</html>
