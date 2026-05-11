@@ -501,10 +501,10 @@
 // ─── State ────────────────────────────────────────────────────────────────────
 const colors = {
   primary:   { l: 61, c: 0.16, h: 360 },
-  secondary: { l: 66, c: 0.16, h: 221 },
-  success:   { l: 67, c: 0.16, h: 138 },
-  warning:   { l: 77, c: 0.16, h:  77 },
-  error:     { l: 59, c: 0.19, h:  25 },
+  secondary: { l: 67, c: 0.14, h: 221 },
+  success:   { l: 67, c: 0.14, h: 138 },
+  warning:   { l: 72, c: 0.14, h:  77 },
+  error:     { l: 66, c: 0.16, h:  25 },
 }
 
 const radiusOptions = [
@@ -524,19 +524,19 @@ const shadowOptions = [
 ]
 
 // Neutral tint: h = hue, c = chroma (0 = pure gray)
-const neutral = { h: 0, c: 0 }
+const neutral = { h: 68, c: 0.01 }
 
 // Lightness stops — label, token name, current L, min, max
 const neutralStops = [
   { name: 'neutral-50',  label: 'Background', l: 98, min: 80, max: 100 },
   { name: 'muted',       label: 'Muted bg',   l: 92, min: 70, max: 99  },
-  { name: 'border',      label: 'Border',     l: 88, min: 55, max: 97  },
-  { name: 'muted-fg',    label: 'Muted text', l: 45, min: 20, max: 75  },
-  { name: 'neutral-900', label: 'Foreground', l: 15, min:  5, max: 45  },
+  { name: 'border',      label: 'Border',     l: 89, min: 55, max: 97  },
+  { name: 'muted-fg',    label: 'Muted text', l: 53, min: 20, max: 75  },
+  { name: 'neutral-900', label: 'Foreground', l: 23, min:  5, max: 45  },
 ]
 
 let currentRadius = '1rem'
-let currentShadow = shadowOptions[1].value
+let currentShadow = shadowOptions[0].value
 let isDark = false
 
 // ─── Build sidebar controls ────────────────────────────────────────────────────
