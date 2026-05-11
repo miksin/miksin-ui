@@ -12,4 +12,24 @@ import Demo from '../../components/Demo.astro'
   <input class="toggle" type="checkbox" checked />
   <input class="toggle" type="checkbox" disabled />
 </div>`} />
+
+  <h2 class="text-xl font-semibold mt-8 mb-3">Class Reference</h2>
+  <table class="w-full text-sm border-collapse">
+    <thead>
+      <tr style="border-bottom: 1.5px solid var(--color-border);">
+        <th class="text-left py-2 pr-4">Class</th>
+        <th class="text-left py-2">Description</th>
+      </tr>
+    </thead>
+    <tbody style="color: var(--color-muted-fg);">
+      {[
+        ['.toggle', 'On/off switch — styled checkbox with pill track and sliding thumb'],
+      ].map(([cls, desc]) => (
+        <tr style="border-bottom: 1px solid var(--color-border);">
+          <td class="py-2 pr-4 font-mono text-xs" style="color: var(--color-fg);">{cls}</td>
+          <td class="py-2">{desc}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
 </Layout>

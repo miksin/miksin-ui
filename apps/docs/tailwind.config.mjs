@@ -2,5 +2,6 @@ import miksinui from 'miksin-ui/tailwind'
 
 export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+  corePlugins: { container: false },
   plugins: [miksinui],
 }

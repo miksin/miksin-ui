@@ -5,6 +5,6 @@
     "build": "pnpm --filter miksin-ui build",
     "build:docs": "pnpm --filter docs build",
     "dev:docs": "pnpm --filter docs dev",
-    "test": "pnpm --filter miksin-ui test"
+    "test": "pnpm --filter miksin-ui build && pnpm --filter miksin-ui test"
   }
 }
