@@ -49,3 +49,13 @@ test('checkbox/radio/toggle classes present', () => {
   assert.ok(css.includes('.radio'), '.radio missing')
   assert.ok(css.includes('.toggle'), '.toggle missing')
 })
+
+test('layout classes present', () => {
+  const css = readFileSync(distPath, 'utf-8')
+  assert.ok(css.includes('.card'), '.card missing')
+  assert.ok(css.includes('.card-header'), '.card-header missing')
+  assert.ok(css.includes('.card-body'), '.card-body missing')
+  assert.ok(css.includes('.card-footer'), '.card-footer missing')
+  assert.ok(css.includes('.container'), '.container missing')
+  assert.ok(css.includes('.divider'), '.divider missing')
+})

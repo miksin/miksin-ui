@@ -1,0 +1,28 @@
+@layer components {
+  .card {
+    background-color: var(--color-bg);
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--card-radius);
+    overflow: hidden;
+  }
+
+  .card-header {
+    padding: var(--card-padding);
+    border-bottom: 1.5px solid var(--color-border);
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--color-fg);
+  }
+
+  .card-body {
+    padding: var(--card-padding);
+    color: var(--color-fg);
+  }
+
+  .card-footer {
+    padding: var(--card-padding);
+    border-top: 1.5px solid var(--color-border);
+    background-color: var(--color-muted);
+    color: var(--color-muted-fg);
+  }
+}
