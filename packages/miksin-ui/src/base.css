@@ -12,7 +12,7 @@
     --color-error-500:     oklch(66% 0.16 25);
     --color-neutral-50:    oklch(98% 0.01 68);
     --color-neutral-900:   oklch(23% 0.01 68);
-    --radius-base:         1rem;
+    --radius-base:         0.75rem;
 
     /* Semantic */
     --color-bg:            var(--color-neutral-50);
