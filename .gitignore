@@ -3,3 +3,4 @@ dist/
 .astro/
 .pnpm-store/
 .superpowers/
+.playwright-mcp/
