@@ -1,0 +1,15 @@
+---
+interface Props {
+  code: string
+  lang?: string
+}
+const { code, lang = 'html' } = Astro.props
+---
+<div class="not-prose my-6 overflow-hidden rounded-lg" style="border: 1.5px solid var(--color-border);">
+  <div class="p-6 flex flex-wrap gap-3 items-center" style="background-color: var(--color-bg);">
+    <Fragment set:html={code} />
+  </div>
+  <div class="border-t text-sm" style="border-color: var(--color-border); background-color: var(--color-muted);">
+    <pre class="p-4 overflow-x-auto m-0"><code class="text-xs" style="color: var(--color-fg);">{code}</code></pre>
+  </div>
+</div>

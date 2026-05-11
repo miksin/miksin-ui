@@ -1,0 +1,10 @@
+---
+interface Props {
+  code: string
+  lang?: string
+}
+const { code } = Astro.props
+---
+<div class="my-4 overflow-hidden rounded-lg" style="border: 1.5px solid var(--color-border);">
+  <pre class="p-4 overflow-x-auto m-0" style="background-color: var(--color-muted);"><code class="text-xs" style="color: var(--color-fg);">{code}</code></pre>
+</div>
