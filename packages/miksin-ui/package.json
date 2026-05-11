@@ -1,0 +1,29 @@
+{
+  "name": "miksin-ui",
+  "version": "0.1.0",
+  "description": "Token-based CSS design system",
+  "main": "./tailwind.js",
+  "exports": {
+    ".": "./tailwind.js",
+    "./tailwind": "./tailwind.js",
+    "./dist/miksin-ui.css": "./dist/miksin-ui.css"
+  },
+  "files": ["dist", "tailwind.js"],
+  "scripts": {
+    "build": "postcss src/index.css -o dist/miksin-ui.css",
+    "test": "node --test test/output.test.mjs"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.0",
+    "postcss-cli": "^11.0.0",
+    "postcss-import": "^16.0.0",
+    "postcss-nesting": "^12.0.0"
+  },
+  "peerDependencies": {
+    "tailwindcss": ">=3.0.0"
+  },
+  "peerDependenciesMeta": {
+    "tailwindcss": { "optional": true }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "miksin-ui-repo",
+  "private": true,
+  "scripts": {
+    "build": "pnpm --filter miksin-ui build",
+    "build:docs": "pnpm --filter docs build",
+    "dev:docs": "pnpm --filter docs dev",
+    "test": "pnpm --filter miksin-ui test"
+  }
+}
