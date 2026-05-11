@@ -1,0 +1,36 @@
+---
+import Layout from '../layouts/Layout.astro'
+import CodeBlock from '../components/CodeBlock.astro'
+---
+<Layout title="Introduction">
+  <h1 class="text-4xl font-bold mb-3">miksin-ui</h1>
+  <p class="text-lg mb-8" style="color: var(--color-muted-fg);">
+    A token-based CSS design system. Pure CSS classes that work with any JS framework.
+    Tailwind-compatible.
+  </p>
+
+  <h2 class="text-2xl font-semibold mt-10 mb-4">Installation</h2>
+  <CodeBlock code={`npm install miksin-ui`} />
+
+  <h2 class="text-2xl font-semibold mt-10 mb-4">Usage — CSS import</h2>
+  <p class="mb-3" style="color: var(--color-muted-fg);">Works with any framework. Import the CSS and use the classes directly.</p>
+  <CodeBlock code={`import 'miksin-ui/dist/miksin-ui.css'`} />
+  <CodeBlock code={`<button class="btn">Click me</button>`} />
+
+  <h2 class="text-2xl font-semibold mt-10 mb-4">Usage — Tailwind plugin</h2>
+  <p class="mb-3" style="color: var(--color-muted-fg);">Adds miksin-ui classes and bridges tokens to Tailwind's theme.</p>
+  <CodeBlock code={`// tailwind.config.js
+import miksinui from 'miksin-ui/tailwind'
+
+export default {
+  content: ['./src/**/*.{html,js,ts,jsx,tsx,astro,vue,svelte}'],
+  plugins: [miksinui],
+}`} />
+
+  <h2 class="text-2xl font-semibold mt-10 mb-4">Theming</h2>
+  <p class="mb-3" style="color: var(--color-muted-fg);">Override CSS variables in your own stylesheet to set your brand colors.</p>
+  <CodeBlock code={`:root {
+  --color-primary-500: oklch(55% 0.25 145); /* green */
+  --radius-base: 0.75rem;                   /* rounder */
+}`} />
+</Layout>
