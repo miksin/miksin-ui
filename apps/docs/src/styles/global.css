@@ -1,4 +1,5 @@
-/* Docs-site-specific styles only. miksin-ui CSS is injected by the Tailwind plugin. */
+/* Docs-site-specific styles only. miksin-ui CSS is loaded via @import below. */
+@import 'miksin-ui/dist/miksin-ui.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
