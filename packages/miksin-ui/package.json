@@ -11,7 +11,8 @@
   "files": ["dist", "tailwind.js"],
   "scripts": {
     "build": "postcss src/index.css -o dist/miksin-ui.css",
-    "test": "node --test test/output.test.mjs"
+    "test": "node --test test/output.test.mjs",
+    "prepublishOnly": "pnpm build && pnpm test"
   },
   "dependencies": {
     "postcss": "^8.4.0"
