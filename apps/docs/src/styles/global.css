@@ -1,5 +1,2 @@
-/* Docs-site-specific styles only. miksin-ui CSS is loaded via @import below. */
+@import "tailwindcss";
 @import 'miksin-ui/dist/miksin-ui.css';
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
