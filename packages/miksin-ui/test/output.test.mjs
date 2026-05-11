@@ -35,3 +35,17 @@ test('badge classes present', () => {
   assert.ok(css.includes('.badge-outline'), '.badge-outline missing')
   assert.ok(css.includes('.badge-sm'), '.badge-sm missing')
 })
+
+test('form control classes present', () => {
+  const css = readFileSync(distPath, 'utf-8')
+  assert.ok(css.includes('.input'), '.input missing')
+  assert.ok(css.includes('.select'), '.select missing')
+  assert.ok(css.includes('.textarea'), '.textarea missing')
+})
+
+test('checkbox/radio/toggle classes present', () => {
+  const css = readFileSync(distPath, 'utf-8')
+  assert.ok(css.includes('.checkbox'), '.checkbox missing')
+  assert.ok(css.includes('.radio'), '.radio missing')
+  assert.ok(css.includes('.toggle'), '.toggle missing')
+})
