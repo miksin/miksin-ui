@@ -6,7 +6,8 @@
     "type": "git",
     "url": "https://github.com/miksin/miksin-ui.git"
   },
-  "homepage": "https://github.com/miksin/miksin-ui#readme",
+  "homepage": "https://ui.miksin.art",
+  "license": "MIT",
   "main": "./dist/miksin-ui.css",
   "exports": {
     ".": "./dist/miksin-ui.css",
